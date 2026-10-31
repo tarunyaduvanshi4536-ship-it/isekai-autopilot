@@ -42,9 +42,26 @@ def fetch_image(keyword, path):
     Path(path).write_bytes(img)
     return path
 
-# ---------------- STEP 3: VOICEOVER (edge-tts) ----------------
-async def tts(text, path):
-    await edge_tts.Communicate(text, VOICE, rate="+5%").save(path)
+# ---------------- STEP 3: VOICEOVER ----------------
+# edge-tts (best quality) blocks GitHub Actions IPs with 403 intermittently,
+# so we retry it, then fall back to gTTS so a video is ALWAYS produced.
+async def _edge_tts(text, path):
+    for attempt in range(3):
+        try:
+            await edge_tts.Communicate(text, VOICE, rate="+5%").save(path)
+            return os.path.getsize(path) > 1000
+        except Exception as e:
+            print(f"edge-tts attempt {attempt+1} failed: {e}")
+            await asyncio.sleep(6 * (attempt + 1))
+    return False
+
+def tts(text, path):
+    if asyncio.run(_edge_tts(text, path)):
+        print("voice: edge-tts (neural)")
+        return
+    print("voice: falling back to gTTS")
+    import gtts
+    gtts.gTTS(text, lang="en", tld="com").save(path)
 
 # ---------------- STEP 4: BUILD ----------------
 def build_srt(segments, durations):
@@ -69,7 +86,7 @@ def make_video(video):
     for i, seg in enumerate(segments):
         img = fetch_image(seg["keyword"], f"work/img{i}.jpg")
         mp3 = f"work/seg{i}.mp3"
-        asyncio.run(tts(seg["text"], mp3))
+        tts(seg["text"], mp3)
         dur = AudioFileClip(mp3).duration + 0.4
         durations.append(dur)
         clips.append(
