@@ -170,9 +170,14 @@ def upload(video_path, thumb_path, video):
     vid = resp["id"]
     print("Uploaded:", vid)
 
-    yt.thumbnails().set(videoId=vid,
-        media_body=MediaFileUpload(thumb_path)).execute()
-    print("Thumbnail set.")
+    try:
+        yt.thumbnails().set(videoId=vid,
+            media_body=MediaFileUpload(thumb_path)).execute()
+        print("Thumbnail set.")
+    except Exception as e:
+        # Usually: channel not verified (https://www.youtube.com/verify).
+        # Never fail the whole run over a thumbnail — the video is already live.
+        print(f"WARNING: thumbnail not set ({e})")
 
 if __name__ == "__main__":
     video = load_video()
