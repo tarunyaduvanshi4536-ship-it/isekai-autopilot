@@ -11,6 +11,12 @@ import edge_tts
 from PIL import Image, ImageDraw, ImageFont
 from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips
 
+# Pillow 10+ removed Image.ANTIALIAS, but MoviePy 1.0.3 still references it.
+# Map it to its modern equivalent so resize() works with any Pillow version.
+import PIL.Image
+if not hasattr(PIL.Image, "ANTIALIAS"):
+    PIL.Image.ANTIALIAS = PIL.Image.LANCZOS
+
 # ---------------- CONFIG ----------------
 UNSPLASH_KEY   = os.environ["UNSPLASH_KEY"]
 YT_CLIENT_ID     = os.environ["YT_CLIENT_ID"]
