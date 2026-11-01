@@ -64,4 +64,5 @@ paths:
 logging:
   level: "INFO"
   format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  log_dir: "logs"          # ← ADD THIS LINE
   file_retention_days: 7
