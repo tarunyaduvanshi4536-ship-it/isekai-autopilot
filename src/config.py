@@ -76,6 +76,7 @@ class PathsConfig(BaseModel):
 class LoggingConfig(BaseModel):
     level: str = "INFO"
     format: str = "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+    log_dir: str = "logs"          # ← ADD THIS LINE
     file_retention_days: int = 7
 
 
