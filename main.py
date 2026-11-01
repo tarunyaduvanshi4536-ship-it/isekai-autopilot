@@ -224,7 +224,7 @@ def main():
 
     # concat
     concat_txt = WORK / "concat.txt"
-    concat_txt.write_text("".join(f"file '{f}'\n" for f in seg_files))
+    concat_txt.write_text("".join(f"file '{f.name}'\n" for f in seg_files))
     run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0",
          "-i", concat_txt, "-c", "copy", WORK / "temp.mp4"])
 
