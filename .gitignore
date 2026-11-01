@@ -1,0 +1,20 @@
+# Local config with secrets
+config.local.yaml
+
+# Runtime artifacts
+work/
+logs/
+*.mp4
+*.mp3
+*.jpg
+*.srt
+*.txt
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
