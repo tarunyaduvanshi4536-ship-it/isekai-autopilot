@@ -5,7 +5,7 @@ youtube:
   category_id: "1"
   privacy_status: "public"
   tags: ["isekai", "anime", "top 5", "recommendations"]
-  max_uploads_per_day: 5        # ← changed from 1
+  max_uploads_per_day: 1
   quota_limit_per_day: 10000
   upload_cost: 1600
 
