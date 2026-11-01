@@ -1,8 +1,9 @@
 name: daily-isekai-video
+
 on:
   schedule:
-    - cron: "0 10 * * *"        # 10:00 UTC daily — adjust to your audience
-  workflow_dispatch:            # manual trigger button
+    - cron: "23 10 * * *"   # daily, off-peak minute
+  workflow_dispatch:         # manual Run workflow button
 
 permissions:
   contents: read
@@ -10,7 +11,6 @@ permissions:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -18,13 +18,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install ffmpeg
+      - name: Install ffmpeg (with libass for captions)
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
-      - name: Install Python deps
+      - name: Install Python dependencies
         run: pip install -r requirements.txt
 
-      - name: Create and upload video
+      - name: Generate and upload today's video
         env:
           UNSPLASH_KEY: ${{ secrets.UNSPLASH_KEY }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
