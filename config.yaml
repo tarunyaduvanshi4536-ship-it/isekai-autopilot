@@ -1,0 +1,67 @@
+# Isekai Autopilot Configuration
+# Copy to config.local.yaml for secrets/overrides (gitignored)
+
+youtube:
+  category_id: "1"
+  privacy_status: "public"
+  tags: ["isekai", "anime", "top 5", "recommendations"]
+  max_uploads_per_day: 1
+  quota_limit_per_day: 10000
+  upload_cost: 1600
+
+video:
+  width: 1920
+  height: 1080
+  fps: 30
+  crf: 18
+  preset: "fast"
+  audio_bitrate: "192k"
+  segment_crossfade: 0.4
+  zoom_max: 1.15
+  zoom_speed: 0.0012
+  caption_font: "DejaVu Sans"
+  caption_size: 22
+  caption_color: "#FFFFFF"
+  caption_outline: "#000000"
+  caption_outline_width: 2
+  caption_margin_v: 40
+
+unsplash:
+  orientation: "landscape"
+  width: 2560
+  height: 1440
+  quality: 90
+  timeout_seconds: 30
+  max_retries: 3
+  retry_backoff_base: 5
+
+tts:
+  primary_voice: "en-US-GuyNeural"
+  rate: "+5%"
+  max_retries: 3
+  retry_backoff_base: 5
+  fallback_enabled: true
+
+thumbnail:
+  width: 1280
+  height: 720
+  title_font_size: 68
+  title_color: "#FFD600"
+  title_stroke_width: 4
+  title_stroke_color: "#000000"
+  overlay_opacity_max: 200
+
+schedule:
+  timezone: "UTC"
+  hour: 10
+  minute: 0
+
+paths:
+  work_dir: "work"
+  scripts_file: "scripts.json"
+  log_dir: "logs"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  file_retention_days: 7
