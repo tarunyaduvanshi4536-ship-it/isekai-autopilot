@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 from datetime import date
 
-from src.config import load_config
+from src.config import load_config, get_config
 from src.utils import get_logger, cleanup_old_logs
 from src.video import VideoBuilder
 from src.youtube import YouTubeUploader, QuotaExceeded
